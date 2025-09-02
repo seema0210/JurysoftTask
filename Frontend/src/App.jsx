@@ -1,22 +1,35 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Users from './components/Users'
-import CreateUser from './components/CreateUser'
-import UpdateUser from './components/UpdateUser'
+import HabitTracker from './components/HabitTracker'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#90caf9',
+    },
+    secondary: {
+      main: '#f48fb1',
+    },
+  },
+});
+
 function App() {
-  
   return (
-    <div>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Users/>}/>
-        <Route path='/create' element={<CreateUser/>}/>
-        <Route path='/updaqte' element={<UpdateUser/>}/>
-      </Routes>
-    </BrowserRouter>
-    <ToastContainer position="top-right" autoClose={3000} />
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <div>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<HabitTracker/>}/>
+          </Routes>
+        </BrowserRouter>
+        <ToastContainer position="top-right" autoClose={3000} />
+      </div>
+    </ThemeProvider>
   )
 }
 
