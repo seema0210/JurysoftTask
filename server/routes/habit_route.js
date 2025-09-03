@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
-    getHabits,
-    markHabitDone,
-    resetHabit
-} = require("../controllers/habit_controller");
+  getHabits,
+  markHabitDone,
+  resetHabit
+} = require('../controllers/habit_controller');
 
-// Define the routes
-router.get("/habits", getHabits);
-router.post("/markHabitDone", markHabitDone);
-router.post("/resetHabit", resetHabit);
+// Define the routes without /api prefix
+router.get('/', getHabits);
+router.post('/create', markHabitDone);
+router.delete('/delete/:id', resetHabit);
 
 module.exports = router;

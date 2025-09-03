@@ -1,9 +1,11 @@
-import { toast } from 'react-toastify';
-
-
 export const getHabits = async () => {
   try {
-    const response = await fetch(`http://localhost:3001/habits`);
+    const response = await fetch(`http://localhost:3001/`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const res = await response.json();
     return res;
   } catch (error) {
@@ -14,47 +16,38 @@ export const getHabits = async () => {
 };
 
 export const markHabitDone = async () => {
-  const today = new Date().toISOString().split('T')[0];
   try {
-    const response = await fetch(`http://localhost:3001/markHabitDone`, {
-      method: "POST",
-      body: JSON.stringify({ 
-        date: today, 
-        habitName: 'Drink Water' 
-      }),
-      headers: {
-        "Content-type": "application/json"
-      }
+    const response = await fetch(`http://localhost:3001/create`, {
+      method: 'POST'
     });
     
-    const res = await response.json();
-    console.log('Marked habit done:', res);
-    toast.success(res.message || "Habit marked as done for today!");
-    return res;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
   } catch (error) {
-    console.log('Error marking habit:', error);
+    console.log('Error marking habit done:', error);
     toast.error('Failed to mark habit as done');
     throw error;
   }
 };
 
 export const resetHabit = async () => {
+    let id = 4
   try {
-    const response = await fetch(`http://localhost:3001/resetHabit`, {
-      method: "POST",
-      body: JSON.stringify({ habitName: 'Drink Water' }),
-      headers: {
-        "Content-type": "application/json"
-      }
+    const response = await fetch(`http://localhost:3001/create/${id}`, {
+      method: 'DELETE'
     });
     
-    const res = await response.json();
-    console.log('Reset habit:', res);
-    toast.success(res.message || "Habit data reset successfully!");
-    return res;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
   } catch (error) {
     console.log('Error resetting habit:', error);
-    toast.error('Failed to reset habit data');
+    toast.error('Failed to reset habit');
     throw error;
   }
 };

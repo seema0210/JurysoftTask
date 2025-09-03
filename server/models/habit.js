@@ -7,7 +7,7 @@ const HabitSchema = new mongoose.Schema({
         default: "Drink Water"
     },
     dates: [{
-        type: String, // Store dates as strings in YYYY-MM-DD format
+        type: String,
         required: true
     }]
 })

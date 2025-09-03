@@ -12,24 +12,21 @@ const getHabits = async (req, res) => {
 
 const markHabitDone = async (req, res) => {
     try {
-        const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-        const habitName = "Drink Water"; // Fixed habit name
+        const today = new Date().toISOString().split('T')[0];
+        const habitName = "Drink Water";
         
-        // Find or create the habit
         let habit = await HabitModel.findOne({ name: habitName });
         
         if (!habit) {
-            // Create new habit if it doesn't exist
             habit = new HabitModel({
                 name: habitName,
                 dates: [today]
             });
             await habit.save();
         } else {
-            // Check if date already exists
             if (!habit.dates.includes(today)) {
                 habit.dates.push(today);
-                habit.dates.sort(); // Keep dates sorted
+                habit.dates.sort();
                 await habit.save();
             }
         }
@@ -44,9 +41,8 @@ const markHabitDone = async (req, res) => {
 
 const resetHabit = async (req, res) => {
     try {
-        const habitName = "Drink Water"; // Fixed habit name
+        const habitName = "Drink Water";
         
-        // Delete the habit
         await HabitModel.deleteOne({ name: habitName });
         
         const habits = await HabitModel.find({});
